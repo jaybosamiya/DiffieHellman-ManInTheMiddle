@@ -3,6 +3,7 @@
 import threading
 import time
 import gui
+import sys
 
 def usage():
     print "Usage:"
@@ -19,7 +20,7 @@ if len(sys.argv) == 2: # server
     except:
         print "Unable to open port %d" % int(sys.argv[1])
         sys.exit()
-else if len(sys.argv) == 3: # client
+elif len(sys.argv) == 3: # client
     try:
         conn = connect(sys.argv[1],int(sys.argv[2]))
     except:
