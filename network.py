@@ -1,37 +1,31 @@
 #! /usr/bin/env python
 
-import socket
+import pwn
 import threading
 
 class Collector (threading.Thread):
-    def set_sock_buff(self, s, b):
-        self.s = s
+    def set_conn_buff(self, c, b):
+        self.c = c
         self.b = b
         return self
 
     def run(self):
         while True:
-            self.b.append(self.s.recv(1024))
+            self.b.append(self.c.recv(1024)) ##
 
 
 class Connection():
     def __init__(self):
-        self.skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.data_buffer = []
-        self.listener_thread = Collector().set_sock_buff(self.skt, self.data_buffer)
 
     def listen(self, port_no):
-        print repr((socket.gethostname(), port_no))
-        self.skt.bind((socket.gethostname(), port_no))
-        self.skt.listen(5)
-        self.skt, addr = self.skt.accept()
-        print addr
-        self.listener_thread.start()
+        l = pwn.listen(port_no)
+        self.conn = l.wait_for_connection()
+        Collector().set_conn_buff(self.conn, self.data_buffer).start()
 
     def connect(self, ip, port_no):
-        print repr((ip, port_no))
-        self.skt.connect((ip, port_no))
-        self.listener_thread.start()
+        self.conn = pwn.remote(ip, port_no)
+        Collector().set_conn_buff(self.conn, self.data_buffer).start()
 
     def ready(self):
         total_string = ''.join(self.data_buffer)
@@ -43,9 +37,10 @@ class Connection():
 
     def recv(self):
         total_string = ''.join(self.data_buffer)
+        loc = total_string.find('\x0d\x0a')
         ret = total_string[:loc]
         self.data_buffer = [total_string[2+loc:]]
         return ret
 
     def send(self, data):
-        self.skt.send(data)
+        self.conn.send(data)
