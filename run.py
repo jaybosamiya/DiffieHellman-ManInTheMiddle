@@ -28,6 +28,7 @@ elif len(sys.argv) == 3: # client
         conn.connect(sys.argv[1],int(sys.argv[2]))
     except:
         print "Unable to connect to %s at port %d" % (sys.argv[1],int(sys.argv[2]))
+        sys.exit()
 else:
     print "Unreachable code reached!!!"
     sys.exit()
@@ -36,7 +37,7 @@ class ChatReader (threading.Thread):
     def run(self):
         while True:
             while not conn.ready():
-                sleep(1)
+                time.sleep(1)
             line = conn.recv()
             gui.add_new_text("[Other] " + line)
 
