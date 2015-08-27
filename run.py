@@ -4,6 +4,7 @@ import threading
 import time
 import gui
 import sys
+import network
 
 def usage():
     print "Usage:"
@@ -14,15 +15,17 @@ def usage():
 if not (len(sys.argv) == 2 or len(sys.argv) == 3):
     usage()
 
+conn = network.Connection()
+
 if len(sys.argv) == 2: # server
     try:
-        conn = listen(int(sys.argv[1]))
+        conn.listen(int(sys.argv[1]))
     except:
         print "Unable to open port %d" % int(sys.argv[1])
         sys.exit()
 elif len(sys.argv) == 3: # client
     try:
-        conn = connect(sys.argv[1],int(sys.argv[2]))
+        conn.connect(sys.argv[1],int(sys.argv[2]))
     except:
         print "Unable to connect to %s at port %d" % (sys.argv[1],int(sys.argv[2]))
 else:
