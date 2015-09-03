@@ -25,9 +25,10 @@ def send_message_callback():
         sys.exit
     else:
         message = input_text_box.get()
-        message_sender_callback(message)
-        add_new_text("[Me] " + message)
-        input_text_box.delete(0, Tkinter.END)
+        if message.strip() != '':
+            message_sender_callback(message)
+            add_new_text("[Me] " + message)
+            input_text_box.delete(0, Tkinter.END)
 
 
 def set_send_message_callback(callback):
