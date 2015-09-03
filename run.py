@@ -2,7 +2,6 @@
 
 import threading
 import time
-import gui
 import sys
 import network
 
@@ -33,18 +32,22 @@ else:
     print "Unreachable code reached!!!"
     sys.exit()
 
-class ChatReader (threading.Thread):
-    def run(self):
-        while True:
-            while not conn.ready():
-                time.sleep(1)
-            line = conn.recv()
-            gui.add_new_text("[Other] " + line)
-
-ChatReader().start()
-
 def send_message(text):
     conn.send(text)
 
-gui.set_send_message_callback(send_message)
-gui.start()
+class GUIThread (threading.Thread):
+    def run(self):
+        import gui
+        gui.set_send_message_callback(send_message)
+        gui.start()
+
+GUIThread().start()
+
+while True:
+    line = conn.recv()
+    if line is not None:
+        import gui
+        if line != '':
+            gui.add_new_text("[Other] " + line)
+    else:
+        break
