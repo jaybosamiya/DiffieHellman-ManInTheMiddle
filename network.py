@@ -4,7 +4,9 @@ import pwn
 
 encoding_method = 'base64'
 
+
 class Connection():
+
     def __init__(self):
         self.data_buffer = []
 
@@ -22,4 +24,4 @@ class Connection():
             return None
 
     def send(self, data):
-        self.conn.send(data.strip().encode(encoding_method)+'\n')
+        self.conn.send(data.strip().encode(encoding_method) + '\n')

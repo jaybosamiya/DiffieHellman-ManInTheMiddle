@@ -5,6 +5,7 @@ import time
 import sys
 import network
 
+
 def usage():
     print "Usage:"
     print "    Server: " + sys.argv[0] + " port_number"
@@ -16,26 +17,29 @@ if not (len(sys.argv) == 2 or len(sys.argv) == 3):
 
 conn = network.Connection()
 
-if len(sys.argv) == 2: # server
+if len(sys.argv) == 2:  # server
     try:
         conn.listen(int(sys.argv[1]))
     except:
         print "Unable to open port %d" % int(sys.argv[1])
         sys.exit()
-elif len(sys.argv) == 3: # client
+elif len(sys.argv) == 3:  # client
     try:
-        conn.connect(sys.argv[1],int(sys.argv[2]))
+        conn.connect(sys.argv[1], int(sys.argv[2]))
     except:
-        print "Unable to connect to %s at port %d" % (sys.argv[1],int(sys.argv[2]))
+        print "Unable to connect to %s at port %d" % (sys.argv[1], int(sys.argv[2]))
         sys.exit()
 else:
     print "Unreachable code reached!!!"
     sys.exit()
 
+
 def send_message(text):
     conn.send(text)
 
+
 class GUIThread (threading.Thread):
+
     def run(self):
         import gui
         gui.set_send_message_callback(send_message)
