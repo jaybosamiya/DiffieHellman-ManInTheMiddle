@@ -32,13 +32,13 @@ if __name__ == '__main__':
     pA, gA, A = personA.generate_public_broadcast()
     print 'pA = %x' % pA
     print 'gA = %x' % gA
-    print 'A = %x' % A
+    print 'A  = %x' % A
 
     personB = DiffieHellman(pA, gA)
     pB, gB, B = personB.generate_public_broadcast()
     print 'pB = %x' % pB
     print 'gB = %x' % gB
-    print 'B = %x' % B
+    print 'B  = %x' % B
     assert(pA == pB)
     assert(gA == gB)
 
