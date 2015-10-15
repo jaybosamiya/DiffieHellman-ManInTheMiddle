@@ -2,6 +2,7 @@
 
 from random import randint
 from Crypto.Cipher import AES
+from binascii import a2b_hex
 
 
 def gen_rand_data(length=16):
@@ -78,14 +79,18 @@ def AES_128_CBC_decrypt(data, key, iv):
 
 
 AES_key = None
-AES_iv = '128348347dhrughdf'
+AES_iv = None
 
 
 def init(key):
+    from Crypto.Hash import SHA256
     global AES_key
-    assert(type(key) == str)
-    assert(len(key) == 16)
-    AES_key = key
+    str_key = str(key)
+    h = SHA256.new()
+    h.update(str(key))
+    long_key = a2b_hex(h.hexdigest())
+    AES_key = long_key[:16]
+    AES_iv = long_key[16:]
 
 
 def encrypt(data):
