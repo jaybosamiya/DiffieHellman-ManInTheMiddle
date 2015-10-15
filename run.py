@@ -20,6 +20,7 @@ if not (len(sys.argv) == 2 or len(sys.argv) == 3):
 conn = network.Connection()
 dh = None
 
+
 def get_line():
     line = None
     while line is None:
