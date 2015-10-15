@@ -24,4 +24,5 @@ class Connection():
             return None
 
     def send(self, data):
-        self.conn.send(data.strip().encode(encoding_method).replace('\n','') + '\n')
+        self.conn.send(data.strip().encode(
+            encoding_method).replace('\n', '') + '\n')
