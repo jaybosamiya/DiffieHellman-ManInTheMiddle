@@ -84,7 +84,7 @@ AES_iv = None
 
 def init(key):
     from Crypto.Hash import SHA256
-    global AES_key
+    global AES_key, AES_iv
     str_key = str(key)
     h = SHA256.new()
     h.update(str(key))
