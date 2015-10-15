@@ -12,7 +12,9 @@ which exchanges keys using Diffie-Hellman and then to develop a MITM attack on i
 Usage
 -----
 
-TODO
+Run the server using `python run.py port_number`. Then, run the client using `python run.py ip_address port_number`. You can then talk between the two systems.
+
+TODO: How to break the attack
 
 License
 -------
