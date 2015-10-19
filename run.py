@@ -5,7 +5,7 @@ import time
 import sys
 import network
 from diffie_hellman import DiffieHellman
-import crypto_protocol
+from crypto_protocol import CryptoProtocol
 
 
 def usage():
@@ -39,7 +39,7 @@ if len(sys.argv) == 2:  # server
     conn.send(str(g))
     conn.send(str(A))
     B = int(get_line())
-    crypto_protocol.init(dh.get_shared_secret(B))
+    crypto_protocol = CryptoProtocol(dh.get_shared_secret(B))
 elif len(sys.argv) == 3:  # client
     try:
         conn.connect(sys.argv[1], int(sys.argv[2]))
@@ -52,7 +52,7 @@ elif len(sys.argv) == 3:  # client
     dh = DiffieHellman(p, g)
     _, _, B = dh.generate_public_broadcast()
     conn.send(str(B))
-    crypto_protocol.init(dh.get_shared_secret(A))
+    crypto_protocol = CryptoProtocol(dh.get_shared_secret(A))
 else:
     print "Unreachable code reached!!!"
     sys.exit()
