@@ -78,32 +78,27 @@ def AES_128_CBC_decrypt(data, key, iv):
     return pkcs_7_unpad(decrypted_data)
 
 
-AES_key = None
-AES_iv = None
+class CryptoProtocol:
 
+    def __init__(self, key):
+        from Crypto.Hash import SHA256
+        str_key = str(key)
+        h = SHA256.new()
+        h.update(str(key))
+        long_key = a2b_hex(h.hexdigest())
+        self.AES_key = long_key[:16]
+        self.AES_iv = long_key[16:]
 
-def init(key):
-    from Crypto.Hash import SHA256
-    global AES_key, AES_iv
-    str_key = str(key)
-    h = SHA256.new()
-    h.update(str(key))
-    long_key = a2b_hex(h.hexdigest())
-    AES_key = long_key[:16]
-    AES_iv = long_key[16:]
+    def encrypt(self, data):
+        return AES_128_CBC_encrypt(data, self.AES_key, self.AES_iv)
 
-
-def encrypt(data):
-    return AES_128_CBC_encrypt(data, AES_key, AES_iv)
-
-
-def decrypt(data):
-    return AES_128_CBC_decrypt(data, AES_key, AES_iv)
+    def decrypt(self, data):
+        return AES_128_CBC_decrypt(data, self.AES_key, self.AES_iv)
 
 if __name__ == '__main__':
     text = 'abcdefghijklmnopqrstuvwxyz!'
     key = 'abcdef1234567890'
 
-    init(key)
-    assert(decrypt(encrypt(text)) == text)
+    c = CryptoProtocol(key)
+    assert(c.decrypt(c.encrypt(text)) == text)
     print "[+] CBC decrypt(encrypt(text))==text test passed"
