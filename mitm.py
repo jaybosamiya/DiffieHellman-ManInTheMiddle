@@ -13,7 +13,7 @@ from crypto_protocol import CryptoProtocol
 
 def usage():
     print "Usage:"
-    print "    " + sys.argv[0] + "server_ip server_port client_port"
+    print "    " + sys.argv[0] + " server_ip server_port client_port"
     sys.exit()
 
 if len(sys.argv) != 4:
