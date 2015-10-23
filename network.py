@@ -19,10 +19,10 @@ class Connection():
 
     def recv(self):
         try:
-            return self.conn.recvline().strip().decode(encoding_method).strip()
+            return self.conn.recvline().strip().decode(encoding_method)
         except EOFError:
             return None
 
     def send(self, data):
-        self.conn.send(data.strip().encode(
+        self.conn.send(data.encode(
             encoding_method).replace('\n', '') + '\n')
