@@ -43,6 +43,7 @@ try:
 except:
     print "Unable to open port %d" % client_port
     sys.exit()
+
 try:
     conn_server.connect(server_ip, server_port)
 except:
@@ -100,7 +101,5 @@ t = threading.Thread(target=session, args=(
     conn_server, crypto_protocol_server, conn_client, crypto_protocol_client, "server"))
 t.daemon = True
 t.start()
-q = threading.Thread(target=session, args=(
-    conn_client, crypto_protocol_client, conn_server, crypto_protocol_server, "client"))
-q.daemon = True
-q.start()
+
+session(conn_client, crypto_protocol_client, conn_server, crypto_protocol_server, "client")
