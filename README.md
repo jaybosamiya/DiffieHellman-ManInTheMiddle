@@ -12,9 +12,13 @@ which exchanges keys using Diffie-Hellman and then to develop a MITM attack on i
 Usage
 -----
 
+### Normal usage of chat
 Run the server using `python run.py port_number`. Then, run the client using `python run.py ip_address port_number`. You can then talk between the two systems.
 
-TODO: How to break the attack
+### Running the MITM attack
+Run the server using `python run.py port_number_1`. Then run the MITM code using `python server_ip_address port_number_1 port_number_2`. Finally, run `python run.py mitm_ip_address port_number_2`.
+
+This simulates the MITM attack. However, using other tools to jump in the middle using, for example, ARP poisoning etc, then same `ip_address` and `port_number` can be used, as if it were a real attack.
 
 License
 -------
