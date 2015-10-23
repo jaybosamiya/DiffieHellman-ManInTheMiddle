@@ -79,7 +79,7 @@ class GUIThread (threading.Thread):
 
     def run(self):
         import gui
-        gui.start()
+        gui.start(True)
 
 GUIThread().start()
 
