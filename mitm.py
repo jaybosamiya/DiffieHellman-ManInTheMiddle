@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
-# TODO: Convert key exchange protocol part into function to reduce repetition of code.
-# TODO: Thread are getting desync on certain conditions. Find and resolve them.
+# TODO: Convert key exchange protocol part into function to reduce
+# repetition of code.
 
 import threading
 import time
@@ -49,7 +49,7 @@ try:
 except:
     print "Unable to connect to %s at port %d" % (server_ip, server_port)
 
-####### Key exchange: Later can be added some other variants too.#######
+# Key exchange: Later can be added some other variants too.#######
 
 p_server = int(get_line(conn_server))
 g_server = int(get_line(conn_server))
@@ -102,4 +102,5 @@ t = threading.Thread(target=session, args=(
 t.daemon = True
 t.start()
 
-session(conn_client, crypto_protocol_client, conn_server, crypto_protocol_server, "client")
+session(conn_client, crypto_protocol_client,
+        conn_server, crypto_protocol_server, "client")
