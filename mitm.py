@@ -13,10 +13,10 @@ from crypto_protocol import CryptoProtocol
 
 def usage():
     print "Usage:"
-    print "    " + sys.argv[0] + "server_ip server_port client_ip client_port"
+    print "    " + sys.argv[0] + "server_ip server_port client_port"
     sys.exit()
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 4:
     usage()
 
 
@@ -28,8 +28,7 @@ def get_line(conn):
 
 server_ip = sys.argv[1]
 server_port = int(sys.argv[2])
-client_ip = sys.argv[3]
-client_port = int(sys.argv[4])
+client_port = int(sys.argv[3])
 
 conn_server = network.Connection()  # connection with server
 conn_client = network.Connection()  # connection with client
