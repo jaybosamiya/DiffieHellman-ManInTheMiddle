@@ -67,6 +67,9 @@ def AES_128_CBC_encrypt(data, key, iv):
 
 
 def AES_128_CBC_decrypt(data, key, iv):
+    if len(data) % 16 != 0:
+        print "Invalid size of data %s (len = %d)" % (repr(data), len(data))
+        return ''
     block_count = len(data) / 16
     decrypted_data = ''
     prev_block = iv
